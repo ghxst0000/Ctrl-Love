@@ -1,0 +1,6 @@
+[submodule "Ctrl-Love-Backend"]
+	path = Ctrl-Love-Backend
+	url = git@github.com:ghxst0000/Ctrl-Love-Backend.git
+[submodule "Ctrl-Love-Frontend"]
+	path = Ctrl-Love-Frontend
+	url = git@github.com:ghxst0000/Ctrl-Love-Frontend.git
