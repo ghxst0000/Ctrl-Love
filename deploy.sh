@@ -8,28 +8,21 @@ fi
 
 # Log function to print steps
 log_step() {
-    local blue="\033[1;34m"
-    local underline="\033[4m"
-    local reset="\033[0m"
-    echo -e "${blue}\tStep: ${underline}$1${reset}"
+    echo "Step: $1"
 }
 
-# Function to read user input with color
-read_color() {
-    local yellow="\033[1;33m"
-    local reset="\033[0m"
-    read -p "${yellow}$1${reset}" $2
+# Function to read user input
+read_with_default() {
+    local prompt="$1 (default: $2): "
+    read -p "$prompt" value
+    value=${value:-$2}
+    echo "$value"
 }
 
 # Get user input for the Database, PGpassword, and PGusername
-read_color "Enter Database name (default: CtrlLove): " database_name
-read_color "Enter PostgreSQL password (default: postgre): " pg_password
-read_color "Enter PostgreSQL username (default: postgres): " pg_username
-
-# Set default values if variables are empty (user pressed Enter)
-database_name=${database_name:-CtrlLove}
-pg_password=${pg_password:-postgre}
-pg_username=${pg_username:-postgres}
+database_name=$(read_with_default "Enter Database name" "CtrlLove")
+pg_password=$(read_with_default "Enter PostgreSQL password" "postgre")
+pg_username=$(read_with_default "Enter PostgreSQL username" "postgres")
 
 # Create the Docker network
 log_step "Creating Docker network 'ctrl_love_network'"
