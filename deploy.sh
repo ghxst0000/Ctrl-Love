@@ -24,7 +24,7 @@ docker pull postgres
 
 # Run the PostgreSQL container
 log_step "Running PostgreSQL container"
-docker run -d --name postgres_container --network ctrl_love_network -e POSTGRES_PASSWORD=mysecretpassword postgres
+docker run -d --name postgres_container --network ctrl_love_network -e POSTGRES_PASSWORD=postgre postgres
 
 # Build CtrlLoveMigration Docker image
 log_step "Building CtrlLoveMigration Docker image"
