@@ -8,7 +8,10 @@ fi
 
 # Log function to print steps
 log_step() {
-    echo "Step: $1"
+    local blue="\033[1;34m"
+    local underline="\033[4m"
+    local reset="\033[0m"
+    echo -e "${blue}Step: ${underline}$1${reset}"
 }
 
 # Create the Docker network
@@ -25,18 +28,18 @@ docker run -d --name postgres_container --network ctrl_love_network -e POSTGRES_
 
 # Build CtrlLoveMigration Docker image
 log_step "Building CtrlLoveMigration Docker image"
-docker build -t CtrlLoveMigration:latest -f Migration.Dockerfile .
+docker build -t ctrllovemigration:latest -f Migration.Dockerfile .
 
 # Build CtrlLoveServer Docker image
 log_step "Building CtrlLoveServer Docker image"
-docker build -t CtrlLoveServer:latest -f Dockerfile .
+docker build -t ctrlloveserver:latest -f Dockerfile .
 
 # Run CtrlLoveMigration container
 log_step "Running CtrlLoveMigration container"
-docker run --rm --network ctrl_love_network CtrlLoveMigration:latest
+docker run --rm --network ctrl_love_network ctrllovemigration:latest
 
 # Run CtrlLoveServer container
 log_step "Running CtrlLoveServer container"
-docker run -d --name my_app_container -p 8080:80 --network ctrl_love_network CtrlLoveServer:latest
+docker run -d --name my_app_container -p 8080:80 --network ctrl_love_network ctrlloveserver:latest
 
 echo "Setup completed successfully!"
