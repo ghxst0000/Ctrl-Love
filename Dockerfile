@@ -12,7 +12,7 @@ FROM build-dotnet AS publish-dotnet
 RUN dotnet publish "CtrlLove.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Stage 3: Build the Node.js Frontend
-FROM node:20-alpine3.17 AS build-node
+FROM node:lts AS build-node
 WORKDIR /app
 COPY Ctrl-Love-Frontend/Ctrl-Love/package*.json ./
 RUN npm ci
@@ -27,7 +27,6 @@ COPY --from=build-node /app/dist ./wwwroot
 
 # Set the working directory for EF Core migrations
 WORKDIR /backend
-
 
 ENTRYPOINT ["dotnet", "CtrlLove.dll"]
 # Expose ports for the ASP.NET application
